@@ -4,3 +4,36 @@
         width: 75px;
     }
 }
+
+.name-cell {
+    font-size: 1.125rem;
+    font-weight: 500;
+    /* vertical-align: middle; */
+}
+
+.table-movies {
+
+    tbody {
+        vertical-align: middle;
+    }
+}
+
+.score-cell {
+    text-align: center;
+}
+.actions-cell {
+    align-content: center;
+
+    .actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+
+        .btn {
+            padding: .25rem 0;
+            width: 28px;
+            text-align: center;
+        }
+    }
+}
