@@ -3,7 +3,7 @@ const movies = [
         id: 1,
         title: 'The Godfather',
         genre: 'Drama',
-        year: 1972,
+        date: 1972,
         score: 5,
         image: 'https://play-lh.googleusercontent.com/ZucjGxDqQ-cHIN-8YA1HgZx7dFhXkfnz73SrdRPmOOHEax08sngqZMR_jMKq0sZuv5P7-T2Z2aHJ1uGQiys'
 
@@ -12,7 +12,7 @@ const movies = [
         id: 2,
         title: 'The Shawshank Redemption',
         genre: 'Drama',
-        year: 1994,
+        date: 1994,
         score: 2,
         image: 'https://i5.walmartimages.com/asr/5003a7b8-81c5-4803-beee-df5417f06bbe.1f75ffb05ff4e640f976691214312d6a.jpeg'
     },
@@ -20,12 +20,89 @@ const movies = [
         id: 3,
         title: 'The Dark Knight',
         genre: 'Action',
-        year: 2008,
+        date: 2008,
         score: 4,
         image: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg'
+    },
+    {
+        id: 1003,
+        title: 'The Gladiator',
+        genre: 'Action',
+        date: 2000,
+        score: 4,
+        image: 'https://m.media-amazon.com/images/M/MV5BYWQ4YmNjYjEtOWE1Zi00Y2U4LWI4NTAtMTU0MjkxNWQ1ZmJiXkEyXkFqcGc@._V1_.jpg'
+    },
+    {
+        id: 1004,
+        title: 'Inception',
+        genre: 'Action',
+        date: 2010,
+        score: 5,
+        image: 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg'
+    },
+    {
+        id: 1005,
+        title: 'Django Unchained',
+        genre: 'Western',
+        date: 2012,
+        score: 3,
+        image: 'https://pics.filmaffinity.com/Django_desencadenado-956246347-large.jpg'
+    },
+    {
+        id: 1006,
+        title: 'World War Z',
+        genre: 'Horror',
+        date: 2013,
+        score: 2,
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfbdyQYt18ILy67f55TBL9KiPk_42jViTY-3ZE9_RwhVA3vQ8hE0lCzHxNKTP3NWLm1l0&usqp=CAU'
     }
 ];
 
+const inputDateNumber = document.getElementById("date");
+
+inputDateNumber.setAttribute("max", new Date().getFullYear());
+
+const ascTableNameBtn = document.querySelector(".fa-sort-up")
+const descTableNameBtn = document.querySelector(".fa-sort-down")
+
+
+// *Ordenar peliculas
+ascTableNameBtn.addEventListener("click", function () {
+
+    console.log("Ascendente")
+    ordernarPeliculas("asc")
+
+})
+descTableNameBtn.addEventListener("click", function () {
+
+    console.log("Descendente")
+    ordernarPeliculas("desc")
+
+})
+
+function ordernarPeliculas(ordenamiento) {
+
+    const sortedMovies = movies.toSorted( (a,b) => {
+
+        
+    if (ordenamiento === "asc") {
+
+        return a.title.localeCompare(b.title)
+
+    }
+    if (ordenamiento === "desc") {
+
+        return b.title.localeCompare(a.title)
+
+    }
+
+    })
+
+
+    pintarPeliculas(sortedMovies)
+}
+
+// *Pintar peliculas
 pintarPeliculas(movies)
 // obtener el formulario de carga de peliculas desde el DOM (Documento)
 const moviesForm = document.getElementById("moviesForm")
@@ -98,7 +175,7 @@ function pintarPeliculas(arrayPeliculas) {
         </td>
         <td class="actions-cell">
             <div class="actions">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" onclick="editarPelicula(${peli.id})">
                     <i class="fa-solid fa-pencil"></i>
                 </button>\
 
@@ -206,3 +283,26 @@ function mostrarDetalle(ID) {
 }
 
 // Ordenar las peliculas en base a su puntuacion
+
+// *Editar pelicula
+
+function editarPelicula(id) {
+       // Buscar la peliucla en el array de peliculas por su id
+    const pelicula = movies.find(peli => {
+
+        return peli.id === id
+
+    })
+    // Vamos a rellenar el formulario con los datos de la pelicula
+
+    const el = moviesForm.elements;
+
+    el.title.value = pelicula.title
+ 
+    // Vamos a rellenar el formulario con los datos de la pelicula
+    // Vamos a cambiar el texto del boton submit
+    // Vamos a cambiar los estilos de l formualrio para que se vea diferente
+    // Vamos a cambiar el evento de submit del formulario para que actualize la pelicula en lugar de agregarla
+
+
+}

@@ -74,9 +74,10 @@
                     <div class="mt-3 row">
                         <div class="col-6">
                             <label for="fecha_estreno">Fecha estreno</label>
-                            <input type="date" 
+                            <input type="number" 
+                                min="1900"
                                 name="date" 
-                                id="fecha_estreno" 
+                                id="date" 
                                 required 
                                 class="form-control">
                         </div>
@@ -119,7 +120,17 @@
                     <thead>
                         <tr>
                             <th>Imagen</th>
-                            <th>Nombre</th>
+                            <th class="name-header-cell">
+
+                                <div class="name">
+                                    Nombre
+                                    <div class="sort-container">
+                                        <i class="fas fa-sort-up sort-up"></i>
+                                        <i class="fas fa-sort-down sort-down"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="name-header-cell">Nombre</th>
                             <th>Genero</th>
                             <th>Valoracion</th>
                             <th>Fecha Estreno</th>

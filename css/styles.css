@@ -37,3 +37,25 @@
         }
     }
 }
+
+.name-header-cell {
+
+    .name {
+        align-items: center;
+        display: flex;
+    }
+
+    .sort-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    i {
+        cursor: pointer;
+
+        &:hover {
+            color: royalblue;
+        }
+    }
+
+}
