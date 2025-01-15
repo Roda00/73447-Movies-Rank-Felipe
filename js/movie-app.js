@@ -58,6 +58,11 @@ const movies = [
     }
 ];
 
+
+let idEditando = null;
+
+const btnResetForm = document.getElementById("clear-form")
+
 const inputDateNumber = document.getElementById("date");
 
 inputDateNumber.setAttribute("max", new Date().getFullYear());
@@ -119,7 +124,7 @@ moviesForm.addEventListener("submit", function(evento) {
     //Pelicula es un objeto por lo que hay pushearlo a un array
     const pelicula = {
         //Agregamos un id para identficar cada elemento en una base de datos
-        id: new Date().getTime(),
+        id: idEditando || Date.now(),
         title: el.title.value,
         genre: el.genre.value,
         score: el.score.value,
@@ -127,16 +132,34 @@ moviesForm.addEventListener("submit", function(evento) {
         image:  el.image.value,
     }
 
+    if(idEditando) {
+            //si idEditando es diferente de null, entonces estoy editando una pelicula
+
+            const index = movies.findIndex(movie => {
+                if (movie.id === idEditando) {
+                    return true
+                }
+            })
+
+            movies[index] = pelicula
+    } else {
+            // si idEditando es null, entonces estoy agregando una pelicula
+            // agregar la pelicula al array de peliculas
+            movies.push(pelicula)
+    }
+
     // console.log(pelicula);
 
     //Agregar el object al array de peliculas
 
-    movies.push(pelicula);
+    
+    resetform()
 
     pintarPeliculas(movies);
-
-    // console.log(movies);
 } )
+
+
+
 
 // Crear una funcion que reciba un array lo recorra y pinte un tabla por cada pelicula
 
@@ -295,14 +318,56 @@ function editarPelicula(id) {
     })
     // Vamos a rellenar el formulario con los datos de la pelicula
 
+    idEditando = pelicula.id;
+
     const el = moviesForm.elements;
 
     el.title.value = pelicula.title
- 
-    // Vamos a rellenar el formulario con los datos de la pelicula
-    // Vamos a cambiar el texto del boton submit
+    el.genre.value = pelicula.genre
+    el.image.value = pelicula.image
+    el.date.value = pelicula.date
+    el.score.value = pelicula.score
+
+    // Cambiar clases de JS
+
+    const btn = document.querySelector("button[type='submit']")
+    btn.classList.remove("btn-primary")
+    btn.classList.add("btn-success")
+
+    moviesForm.classList.add("bg-success-subtle")
+
+
+    btn.innerText = "Editar Pelicula"
+
+    btnResetForm.classList.remove("d-none")
+
+    btnResetForm.style.borderStyle = "dashed"
     // Vamos a cambiar los estilos de l formualrio para que se vea diferente
     // Vamos a cambiar el evento de submit del formulario para que actualize la pelicula en lugar de agregarla
 
 
 }
+
+
+// Resetear el formulario
+
+btnResetForm.addEventListener("click", resetform) 
+
+    function resetform() {
+
+        moviesForm.reset()
+        moviesForm.elements.title.focus()
+
+        if (idEditando) {
+            btnResetForm.classList.add("d-none")
+
+            idEditando = null
+            moviesForm.classList.remove
+            ("bg-success-subtle")
+            const btn = document.querySelector
+            ("button[type='submit']")
+            btn.innerText = "Agregar Pelicula"
+            btn.classList.remove("btn-success")
+            btn.classList.add("btn-primary")
+        }
+    }
